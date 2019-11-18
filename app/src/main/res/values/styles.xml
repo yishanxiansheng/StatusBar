@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/colorTheme</item>
+        <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">
+            @style/MyDatePickerDialogTheme
+        </item>
+    </style>
+    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
+        <item name="android:colorAccent" tools:targetApi="lollipop">@color/colorTheme</item>
+    </style>
+</resources>
