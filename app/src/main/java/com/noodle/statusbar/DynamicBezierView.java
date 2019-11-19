@@ -15,7 +15,7 @@ import android.view.View;
 
 
 /**
- * 动态贝塞尔曲线
+ * 二阶动态贝塞尔曲线
  *
  * @author heshufan
  * @date 2019-11-19

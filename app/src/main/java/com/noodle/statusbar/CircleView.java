@@ -1,23 +1,28 @@
 package com.noodle.statusbar;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
+import android.graphics.PathMeasure;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 /**
- * 贝塞尔曲线画圆
+ * 三阶贝塞尔曲线画圆
  *
  * @author heshufan
  * @date 2019-11-19
  */
 public class CircleView extends View {
+
+    private static final String TAG = "CircleView";
     /**
      * 圆心
      */
@@ -31,8 +36,11 @@ public class CircleView extends View {
      */
     private float rate = 0.55f;
 
-
+    /**
+     * 完整的路径
+     */
     private Path mPath;
+
     private Paint mPaint;
 
     public CircleView(Context context) {
@@ -73,7 +81,7 @@ public class CircleView extends View {
 
         //弧线3
         mPath.moveTo(mCenter.x, mCenter.y + radius);
-        mPath.cubicTo(mCenter.x - radius * rate, mCenter.y+radius,
+        mPath.cubicTo(mCenter.x - radius * rate, mCenter.y + radius,
                 mCenter.x - radius, mCenter.y + radius * rate,
                 mCenter.x - radius, mCenter.y);
 
