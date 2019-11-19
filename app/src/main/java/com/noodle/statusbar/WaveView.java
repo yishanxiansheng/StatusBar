@@ -13,7 +13,7 @@ import android.view.animation.LinearInterpolator;
 
 /**
  * @author heshufan
- * @desc :
+ * @desc : 贝塞尔曲线画波浪
  * @date 2019/11/18
  */
 public class WaveView extends View {

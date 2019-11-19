@@ -12,7 +12,7 @@ import android.view.View;
 
 /**
  * @author heshufan
- * @desc :
+ * @desc : 贝塞尔曲线最简单的应用
  * @date 2019/11/18
  */
 public class BezierView extends View {
