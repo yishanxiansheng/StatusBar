@@ -4,8 +4,10 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathEffect;
 import android.graphics.PathMeasure;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -21,9 +23,18 @@ import static java.lang.Math.sin;
  * @date 2019-11-19
  */
 public class PathPaintView extends View {
-    private Paint mPaint;
-    private Path mPath;
-    private PathMeasure mPathMeasure;
+    //绘制圆
+    private Paint mCirclePaint;
+
+    private Path mCirclePath;
+    private PathMeasure mCirclePathMeasure;
+
+    //绘制线段
+    private Paint mTrickPaint;
+    private Path mTrickPath;
+    private PathMeasure mTrickPathMeasure;
+    private PathEffect mPathEffect;
+
     private ValueAnimator mAnimator;
     private float mLength;
     private Path mDesPath;
@@ -42,17 +53,35 @@ public class PathPaintView extends View {
     }
 
     private void init() {
-        mPaint = new Paint();
-        mPaint.setColor(Color.RED);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(5);
+        mCirclePaint = new Paint();
+        mCirclePaint.setColor(Color.RED);
+        mCirclePaint.setStyle(Paint.Style.STROKE);
+        mCirclePaint.setStrokeWidth(5);
+        mCirclePaint.setAntiAlias(true);
 
-        mPath = new Path();
-        mPath.addCircle(400, 400, 100, Path.Direction.CW);
+        mTrickPaint = new Paint();
+        mTrickPaint.setColor(Color.RED);
+        mTrickPaint.setStyle(Paint.Style.STROKE);
+        mTrickPaint.setStrokeWidth(5);
+        mTrickPaint.setAntiAlias(true);
+
+        mCirclePath = new Path();
+        mCirclePath.addCircle(400, 400, 100, Path.Direction.CW);
         mDesPath = new Path();
 
-        mPathMeasure = new PathMeasure();
-        mPathMeasure.setPath(mPath, false);
+        mTrickPath = new Path();
+        mTrickPath.reset();
+        mTrickPath.moveTo(100, 100);
+        mTrickPath.lineTo(100, 500);
+        mTrickPath.lineTo(400, 300);
+        mTrickPath.close();
+
+
+        mCirclePathMeasure = new PathMeasure();
+        mCirclePathMeasure.setPath(mCirclePath, false);
+
+        mTrickPathMeasure = new PathMeasure();
+        mTrickPathMeasure.setPath(mTrickPath, false);
 
         mAnimator = ValueAnimator.ofFloat(0, 1);
         mAnimator.setInterpolator(new LinearInterpolator());
@@ -62,11 +91,15 @@ public class PathPaintView extends View {
                 float factor = 0.4f;
                 float x = animation.getAnimatedFraction();
                 mLength = (float) (pow(2, -10 * x) * sin((x - factor / 4) * (2 * PI) / factor) + 1);
-                //mLength = animation.getAnimatedFraction();
+
+                float fraction = animation.getAnimatedFraction();
+                mPathEffect = new DashPathEffect(new float[]{mTrickPathMeasure.getLength(), mTrickPathMeasure.getLength()},
+                        fraction * mTrickPathMeasure.getLength());
+
                 invalidate();
             }
         });
-        mAnimator.setDuration(2000);
+        mAnimator.setDuration(3000);
         mAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mAnimator.start();
     }
@@ -76,7 +109,20 @@ public class PathPaintView extends View {
         super.onDraw(canvas);
         mDesPath.reset();
         mDesPath.lineTo(0, 0);
-        mPathMeasure.getSegment(0, mLength * mPathMeasure.getLength(), mDesPath, true);
-        canvas.drawPath(mDesPath, mPaint);
+        mCirclePathMeasure.getSegment(0, mLength * mCirclePathMeasure.getLength(), mDesPath, true);
+        canvas.drawPath(mDesPath, mCirclePaint);
+
+        //绘制三角形
+        mTrickPaint.reset();
+        mTrickPaint.setColor(Color.BLACK);
+        mTrickPaint.setStyle(Paint.Style.STROKE);
+        mTrickPaint.setStrokeWidth(5);
+        mTrickPaint.setAntiAlias(true);
+        canvas.drawPath(mTrickPath, mTrickPaint);
+
+        //动态三角形
+        mTrickPaint.setColor(Color.RED);
+        mTrickPaint.setPathEffect(mPathEffect);
+        canvas.drawPath(mTrickPath, mTrickPaint);
     }
 }
