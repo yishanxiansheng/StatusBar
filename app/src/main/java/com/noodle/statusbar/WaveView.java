@@ -18,13 +18,15 @@ import android.view.animation.LinearInterpolator;
  */
 public class WaveView extends View {
 
+    private int mWidth;
+    private int mHeight;
     private Paint mPaint;
     private Path mPath;
 
     /**
      * 波浪的半径
      */
-    private int mWidth = 600;
+    private int radius = 600;
 
     /**
      * 起始点X轴移动动画，线性插值器
@@ -50,25 +52,38 @@ public class WaveView extends View {
     }
 
     @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mWidth = w;
+        mHeight = h;
+
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mPath.reset();
-        int halfItem = mWidth / 2;
-        mPath.moveTo(-mWidth + mOffsetX, halfItem);
-        for (int i = 0; i < mWidth + getWidth(); i += mWidth) {
+        int halfItem = radius / 2;
+        mPath.moveTo(-radius + mOffsetX, halfItem);
+        for (int i = 0; i < radius + getWidth(); i += radius) {
             mPath.rQuadTo(halfItem / 2, -100, halfItem, 0);
             mPath.rQuadTo(halfItem / 2, 100, halfItem, 0);
         }
+
+        //闭合图像，并填充
+        mPath.lineTo(mWidth,mHeight);
+        mPath.lineTo(0,mHeight);
+        mPath.close();
         canvas.drawPath(mPath, mPaint);
     }
 
     private void init() {
         mPaint = new Paint();
         mPaint.setColor(Color.BLUE);
-        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setStrokeWidth(5);
         mPath = new Path();
-        mAnimator = ValueAnimator.ofInt(0, mWidth);
+        mAnimator = ValueAnimator.ofInt(0, radius);
         mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
