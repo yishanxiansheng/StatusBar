@@ -1,20 +1,25 @@
 package com.noodle.statusbar;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
     RelativeLayout titleview ;
+    private Button showShareDialogBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +27,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setStatusBar(this);
         titleview = findViewById(R.id.titleName);
+        showShareDialogBtn = findViewById(R.id.show_dialog);
+        showShareDialogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShareDialog();
+            }
+        });
         setTitlePadding();
     }
+
+    /**
+     * 展示分享dialog
+     */
+    private void showShareDialog() {
+        Dialog dialog  = new Dialog(this,R.style.fullScreenDialog);
+        dialog.setContentView(R.layout.share_dialog);
+        dialog.setCancelable(true);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        window.setWindowAnimations(R.style.dialog_anim);
+        if (window != null){
+            dialog.show();
+            window.getDecorView().setPadding(0,0,0,0);
+            lp.copyFrom(window.getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            lp.gravity = Gravity.BOTTOM;
+            window.setAttributes(lp);
+        }
+    }
+
     /**
      * 设置title距离顶部的距离
      */
