@@ -1,4 +1,4 @@
-package com.noodle.statusbar;
+package com.noodle.statusbar.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;

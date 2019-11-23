@@ -10,7 +10,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,12 +19,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.noodle.statusbar.widget.CharEvaluator;
+import com.noodle.statusbar.widget.WaveCircleView;
+
 import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
     RelativeLayout titleview ;
     private Button showShareDialogBtn;
     private TextView mTv;
+    private WaveCircleView mWaveCircleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +38,15 @@ public class MainActivity extends AppCompatActivity {
         setStatusBar(this);
         titleview = findViewById(R.id.titleName);
         mTv = findViewById(R.id.animation_object);
-
+        mWaveCircleView = findViewById(R.id.wave_circle_view);
         showShareDialogBtn = findViewById(R.id.show_dialog);
+
         showShareDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showShareDialog();
                 showObjectAnimation();
+                mWaveCircleView.doPointAnim();
             }
         });
         setTitlePadding();
@@ -50,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
      * 自定义Evaluator 不再局限于int 与float 可以是任意Object
      */
     private void showObjectAnimation() {
-        ValueAnimator animator = ValueAnimator.ofObject(new MyEvaluator(),new Character('A'),new Character('Z'));
+        ValueAnimator animator = ValueAnimator.ofObject(new CharEvaluator(),new Character('A'),new Character('Z'));
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {

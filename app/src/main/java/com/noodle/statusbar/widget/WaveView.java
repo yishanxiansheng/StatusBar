@@ -1,4 +1,4 @@
-package com.noodle.statusbar;
+package com.noodle.statusbar.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

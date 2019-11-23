@@ -9,7 +9,7 @@
     <include
         android:id="@+id/titleName"
         layout="@layout/view_head" />
-    <com.noodle.statusbar.BezierView
+    <com.noodle.statusbar.widget.BezierView
         android:id="@+id/BezierView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -17,9 +17,9 @@
         app:layout_constraintTop_toBottomOf="@+id/titleName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
-    </com.noodle.statusbar.BezierView>
+    </com.noodle.statusbar.widget.BezierView>
 
-    <com.noodle.statusbar.WaveView
+    <com.noodle.statusbar.widget.WaveView
         android:id="@+id/waveView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -27,9 +27,9 @@
         app:layout_constraintTop_toBottomOf="@+id/BezierView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
-    </com.noodle.statusbar.WaveView>
+    </com.noodle.statusbar.widget.WaveView>
 
-    <com.noodle.statusbar.DynamicBezierView
+    <com.noodle.statusbar.widget.DynamicBezierView
         android:id="@+id/dynamicBezierView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -37,24 +37,25 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/waveView">
-    </com.noodle.statusbar.DynamicBezierView>
+    </com.noodle.statusbar.widget.DynamicBezierView>
 
-    <com.noodle.statusbar.CircleView
+    <com.noodle.statusbar.widget.CircleView
         android:id="@+id/circleView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dynamicBezierView">
-    </com.noodle.statusbar.CircleView>
-    <com.noodle.statusbar.PathPaintView
+    </com.noodle.statusbar.widget.CircleView>
+
+    <com.noodle.statusbar.widget.PathPaintView
         android:id="@+id/pathPaintView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleView">
-    </com.noodle.statusbar.PathPaintView>
+    </com.noodle.statusbar.widget.PathPaintView>
     <TextView
         android:id="@+id/animation_object"
         android:layout_width="match_parent"
@@ -75,5 +76,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
     </Button>
+
+    <com.noodle.statusbar.widget.WaveCircleView
+        android:id="@+id/wave_circle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.noodle.statusbar.widget.WaveCircleView>
 
 </android.support.constraint.ConstraintLayout>

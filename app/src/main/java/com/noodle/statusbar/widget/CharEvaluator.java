@@ -1,4 +1,4 @@
-package com.noodle.statusbar;
+package com.noodle.statusbar.widget;
 
 import android.animation.TypeEvaluator;
 
@@ -6,7 +6,7 @@ import android.animation.TypeEvaluator;
  * @author heshufan
  * @date 2019-11-23
  */
-class MyEvaluator implements TypeEvaluator<Character> {
+public class CharEvaluator implements TypeEvaluator<Character> {
 
     @Override
     public Character evaluate(float fraction, Character startValue, Character endValue) {
