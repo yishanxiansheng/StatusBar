@@ -1,5 +1,6 @@
 package com.noodle.statusbar.widget;
 
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -20,12 +21,13 @@ import com.noodle.statusbar.Point;
 public class WaveCircleView extends View {
     private Paint mPaint;
     private Point mcurPoint;
+
     public WaveCircleView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public WaveCircleView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public WaveCircleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -44,13 +46,13 @@ public class WaveCircleView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (mPaint != null){
-            canvas.drawCircle(300,300,mcurPoint.getRadius(),mPaint);
+        if (mPaint != null) {
+            canvas.drawCircle(300, 300, mcurPoint.getRadius(), mPaint);
         }
     }
 
-    public void doPointAnim(){
-        ValueAnimator animator = ValueAnimator.ofObject(new PointEvaluator(),new Point(10),new Point(100));
+    public void doPointAnim() {
+        ValueAnimator animator = ValueAnimator.ofObject(new PointEvaluator(), new Point(10), new Point(100));
         animator.setDuration(1000);
         animator.setInterpolator(new BounceInterpolator());
         animator.setRepeatCount(ValueAnimator.INFINITE);
@@ -62,5 +64,14 @@ public class WaveCircleView extends View {
             }
         });
         animator.start();
+    }
+
+    /**
+     * 利用ObjectAnimation实现弹弹动画 这里的"PointRadius"必须和构建ObjectAnimation时第二个参数保持一致
+     * @param radius 半径
+     */
+    public void setPointRadius(int radius) {
+        mcurPoint.setRadius(radius);
+        invalidate();
     }
 }

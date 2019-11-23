@@ -1,5 +1,6 @@
 package com.noodle.statusbar;
 
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,10 +48,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 showShareDialog();
                 showObjectAnimation();
-                mWaveCircleView.doPointAnim();
+                //mWaveCircleView.doPointAnim();
+                doPointObjectAnim();
             }
         });
         setTitlePadding();
+    }
+
+    /**
+     * 利用OnjectAnimation实现弹弹动画
+     */
+    private void doPointObjectAnim() {
+        ObjectAnimator animator = ObjectAnimator.ofInt(mWaveCircleView,"PointRadius",0,300,100);
+        animator.setDuration(2000);
+        animator.setInterpolator(new BounceInterpolator());
+        animator.start();
     }
 
     /**
