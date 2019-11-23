@@ -1,6 +1,7 @@
 package com.noodle.statusbar;
 
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
@@ -56,13 +57,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 利用OnjectAnimation实现弹弹动画
+     * 利用ObjectAnimation与PropertyValuesHolder实现弹弹动画
      */
     private void doPointObjectAnim() {
-        ObjectAnimator animator = ObjectAnimator.ofInt(mWaveCircleView,"PointRadius",0,300,100);
-        animator.setDuration(2000);
-        animator.setInterpolator(new BounceInterpolator());
-        animator.start();
+//        ObjectAnimator animator = ObjectAnimator.ofInt(mWaveCircleView,"PointRadius",0,300,100);
+//        animator.setDuration(2000);
+//        animator.setInterpolator(new BounceInterpolator());
+//        animator.start();
+
+        //利用PropertyValuesHolder实现弹弹动画
+        PropertyValuesHolder holder = PropertyValuesHolder.ofInt("PointRadius",0,300,100);
+        //这里可以传入多个holder，同时实现多种动画效果
+        ObjectAnimator animator1 = ObjectAnimator.ofPropertyValuesHolder(mWaveCircleView,holder);
+        animator1.setDuration(2000);
+        animator1.setInterpolator(new BounceInterpolator());
+        animator1.start();
     }
 
     /**

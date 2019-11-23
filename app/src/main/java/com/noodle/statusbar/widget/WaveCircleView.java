@@ -67,7 +67,7 @@ public class WaveCircleView extends View {
     }
 
     /**
-     * 利用ObjectAnimation实现弹弹动画 这里的"PointRadius"必须和构建ObjectAnimation时第二个参数保持一致
+     * 利用ObjectAnimation或PropertyValuesHolder实现弹弹动画 这里的"PointRadius"必须和构建ObjectAnimation时第二个参数保持一致
      * @param radius 半径
      */
     public void setPointRadius(int radius) {
