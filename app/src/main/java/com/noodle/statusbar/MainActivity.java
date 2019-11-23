@@ -1,5 +1,6 @@
 package com.noodle.statusbar;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,11 +10,13 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 
@@ -46,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         Window window = dialog.getWindow();
-        window.setWindowAnimations(R.style.dialog_anim);
         if (window != null){
             dialog.show();
             window.getDecorView().setPadding(0,0,0,0);
@@ -55,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
             lp.gravity = Gravity.BOTTOM;
             window.setAttributes(lp);
+            //通过xml文件实现动画
+            window.setWindowAnimations(R.style.dialog_anim);
+            window.findViewById(R.id.dialog_layout).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MainActivity.this,"hha",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
