@@ -1,6 +1,7 @@
 package com.noodle.statusbar;
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -31,24 +32,43 @@ import com.noodle.statusbar.widget.WaveCircleView;
 
 import java.lang.reflect.Field;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     RelativeLayout titleview;
+    /**
+     * 分享按钮
+     */
     private Button showShareDialogBtn;
+    /**
+     * 字母A到Z的变化
+     */
     private TextView mTv;
+    /**
+     * 弹弹效果的圆形
+     */
     private WaveCircleView mWaveCircleView;
+    /**
+     * 电话的震动的动画
+     */
     private ImageView mTelephoneView;
+
+    /**
+     * 按钮弹出的动画
+     */
+    private Button mMenuButton;
+    private Button mItemButton1;
+    private Button mItemButton2;
+    private Button mItemButton3;
+    private Button mItemButton4;
+    private Button mItemButton5;
+    private boolean mIsMenuOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setStatusBar(this);
-        titleview = findViewById(R.id.titleName);
-        mTv = findViewById(R.id.animation_object);
-        mWaveCircleView = findViewById(R.id.wave_circle_view);
-        showShareDialogBtn = findViewById(R.id.show_dialog);
-        mTelephoneView = findViewById(R.id.telephone);
 
+        initView();
         showShareDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +80,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setTitlePadding();
+    }
+
+    private void initView() {
+        titleview = findViewById(R.id.titleName);
+        mTv = findViewById(R.id.animation_object);
+        mWaveCircleView = findViewById(R.id.wave_circle_view);
+        showShareDialogBtn = findViewById(R.id.show_dialog);
+        mTelephoneView = findViewById(R.id.telephone);
+
+        mMenuButton = findViewById(R.id.btn_main);
+        mMenuButton.setOnClickListener(this);
+        mItemButton1 = findViewById(R.id.btn_1);
+        mItemButton1.setOnClickListener(this);
+        mItemButton2 = findViewById(R.id.btn_2);
+        mItemButton2.setOnClickListener(this);
+        mItemButton3 = findViewById(R.id.btn_3);
+        mItemButton3.setOnClickListener(this);
+        mItemButton4 = findViewById(R.id.btn_4);
+        mItemButton4.setOnClickListener(this);
+        mItemButton5 = findViewById(R.id.btn_5);
+        mItemButton5.setOnClickListener(this);
     }
 
     /**
@@ -84,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
      * 利用关键帧KeyFrame实现电话震动的效果
      */
     private void doTelephoneAnim() {
+        //左右摇晃的效果
         Keyframe frame0 = Keyframe.ofFloat(0f, 0);
         Keyframe frame1 = Keyframe.ofFloat(0.1f, -20f);
         Keyframe frame2 = Keyframe.ofFloat(0.2f, 20f);
@@ -97,8 +139,7 @@ public class MainActivity extends AppCompatActivity {
         Keyframe frame10 = Keyframe.ofFloat(1, 0);
         PropertyValuesHolder frameHolder = PropertyValuesHolder.ofKeyframe("rotation", frame0, frame1, frame2,
                 frame3, frame4, frame5, frame6, frame7, frame8, frame9, frame10);
-        /**
-         * scaleX 放大 1.1 倍 */
+        //scaleX 放大 1.1 倍
         Keyframe scaleXframe0 = Keyframe.ofFloat(0f, 1);
         Keyframe scaleXframe1 = Keyframe.ofFloat(0.1f, 1.1f);
         Keyframe scaleXframe2 = Keyframe.ofFloat(0.2f, 1.1f);
@@ -112,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
         Keyframe scaleXframe10 = Keyframe.ofFloat(1, 1);
         PropertyValuesHolder frameHolder2 = PropertyValuesHolder.ofKeyframe("ScaleX", scaleXframe0, scaleXframe1, scaleXframe2,
                 scaleXframe3, scaleXframe4, scaleXframe5, scaleXframe6, scaleXframe7, scaleXframe8, scaleXframe9, scaleXframe10);
-        /**
-         * scaleY 放大 1.1 倍 */
+
+        //scaleY 放大 1.1 倍
         Keyframe scaleYframe0 = Keyframe.ofFloat(0f, 1);
         Keyframe scaleYframe1 = Keyframe.ofFloat(0.1f, 1.1f);
         Keyframe scaleYframe2 = Keyframe.ofFloat(0.2f, 1.1f);
@@ -250,5 +291,108 @@ public class MainActivity extends AppCompatActivity {
             //自动跟底部颜色进行反差
             activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == mMenuButton) {
+            if (!mIsMenuOpen) {
+                mIsMenuOpen = true;
+                doAnimateOpen(mItemButton1, 0, 5, 300);
+                doAnimateOpen(mItemButton2, 1, 5, 300);
+                doAnimateOpen(mItemButton3, 2, 5, 300);
+                doAnimateOpen(mItemButton4, 3, 5, 300);
+                doAnimateOpen(mItemButton5, 4, 5, 300);
+            } else {
+                mIsMenuOpen = false;
+                doAnimateClose(mItemButton1, 0, 5, 300);
+                doAnimateClose(mItemButton2, 1, 5, 300);
+                doAnimateClose(mItemButton3, 2, 5, 300);
+                doAnimateClose(mItemButton4, 3, 5, 300);
+                doAnimateClose(mItemButton5, 4, 5, 300);
+
+            }
+        } else {
+            //属性动画的移动，点击响应区域才会变化
+            Toast.makeText(this, "你点击了" + v, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 按钮弹出的动画
+     * @param view 按钮
+     * @param index 按钮编号
+     * @param total 按钮总数
+     * @param radius 弹出半径
+     */
+    private void doAnimateOpen(View view, int index, int total, int radius) {
+        if (view.getVisibility() != View.VISIBLE) {
+            view.setVisibility(View.VISIBLE);
+        }
+        double degree = Math.toRadians(90) / (total - 1) * index;
+        int translationX = -(int) (radius * Math.sin(degree));
+        int translationY = -(int) (radius * Math.cos(degree));
+        AnimatorSet set = new AnimatorSet();
+        //包含平移、缩放和透明度动画
+        set.playTogether(ObjectAnimator.ofFloat(view, "translationX", 0, translationX),
+                ObjectAnimator.ofFloat(view, "translationY", 0, translationY),
+                ObjectAnimator.ofFloat(view, "scaleX", 0f, 1f),
+                ObjectAnimator.ofFloat(view, "scaleY", 0f, 1f),
+                ObjectAnimator.ofFloat(view, "alpha", 0f, 1));
+        //动画周期为 500ms
+        set.setDuration(1 * 500).start();
+    }
+
+    /**
+     * 按钮收回的动画
+     * @param view 按钮
+     * @param index 按钮编号
+     * @param total 按钮总数
+     * @param radius 半径
+     */
+    private void doAnimateClose(final View view, int index, int total,
+                                int radius) {
+        if (view.getVisibility() != View.VISIBLE) {
+            view.setVisibility(View.VISIBLE);
+        }
+        double degree = Math.PI * index / ((total - 1) * 2);
+        int translationX = -(int) (radius * Math.sin(degree));
+        int translationY = -(int) (radius * Math.cos(degree));
+        AnimatorSet set = new AnimatorSet();
+        //包含平移、缩放和透明度动画
+        set.playTogether(
+                ObjectAnimator.ofFloat(view, "translationX", translationX, 0),
+                ObjectAnimator.ofFloat(view, "translationY", translationY, 0),
+                ObjectAnimator.ofFloat(view, "scaleX", 1f, 0f),
+                ObjectAnimator.ofFloat(view, "scaleY", 1f, 0f),
+                ObjectAnimator.ofFloat(view, "alpha", 1f, 0f));
+        set.setDuration(1 * 500).start();
+
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                //隐藏按钮
+                mItemButton1.setVisibility(View.GONE);
+                mItemButton2.setVisibility(View.GONE);
+                mItemButton3.setVisibility(View.GONE);
+                mItemButton4.setVisibility(View.GONE);
+                mItemButton5.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 }
