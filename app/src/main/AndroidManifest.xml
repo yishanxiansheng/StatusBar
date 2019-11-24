@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LinearActivity" />
+        <activity android:name=".GridActivity" />
+        <activity android:name=".ViewGropActivity" />
     </application>
 
 </manifest>

@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -29,6 +33,9 @@ public class LinearActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,getData());
         mListView.setAdapter(arrayAdapter);
 
+        //代码添加动画
+        loadAnimationByCode();
+
     }
     /**
      * listview的数据
@@ -44,5 +51,20 @@ public class LinearActivity extends AppCompatActivity {
 
     public void reflash(View view){
         arrayAdapter.addAll(getData());
+
+    }
+
+    /**
+     * 通过代码添加动画
+     */
+    private void loadAnimationByCode(){
+        Animation animation = AnimationUtils.loadAnimation(this,R.anim.slide_in_left);
+        LayoutAnimationController controller = new LayoutAnimationController(animation);
+        //设置间隔时间
+        controller.setDelay(1);
+        controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
+        controller.setInterpolator(new BounceInterpolator());
+        mListView.setLayoutAnimation(controller);
+        mListView.startLayoutAnimation();
     }
 }

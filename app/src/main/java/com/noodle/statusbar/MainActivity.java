@@ -324,8 +324,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         } else {
             //属性动画的移动，点击响应区域才会变化
-            Intent intent = new Intent(MainActivity.this, LinearActivity.class);
-            startActivity(intent);
+            if (v == mItemButton5){
+                Intent intent = new Intent(MainActivity.this, LinearActivity.class);
+                startActivity(intent);
+                return;
+            }else if (v== mItemButton4){
+                Intent intent = new Intent(MainActivity.this, GridActivity.class);
+                startActivity(intent);
+                return;
+            }else if (v == mItemButton3){
+                Intent intent = new Intent(MainActivity.this,ViewGropActivity.class);
+                startActivity(intent);
+                return;
+            }
+
         }
     }
 
