@@ -9,6 +9,7 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
@@ -20,8 +21,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +35,8 @@ import com.noodle.statusbar.widget.CharEvaluator;
 import com.noodle.statusbar.widget.WaveCircleView;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     RelativeLayout titleview;
@@ -61,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mItemButton4;
     private Button mItemButton5;
     private boolean mIsMenuOpen = false;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,16 +109,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mItemButton4.setOnClickListener(this);
         mItemButton5 = findViewById(R.id.btn_5);
         mItemButton5.setOnClickListener(this);
+
+
     }
 
     /**
      * 利用ObjectAnimation与PropertyValuesHolder实现弹弹动画
      */
     private void doPointObjectAnim() {
-//        ObjectAnimator animator = ObjectAnimator.ofInt(mWaveCircleView,"PointRadius",0,300,100);
-//        animator.setDuration(2000);
-//        animator.setInterpolator(new BounceInterpolator());
-//        animator.start();
+        //ObjectAnimator animator = ObjectAnimator.ofInt(mWaveCircleView,"PointRadius",0,300,100);
+        //animator.setDuration(2000);
+        //animator.setInterpolator(new BounceInterpolator());
+        //animator.start();
 
         //利用PropertyValuesHolder实现弹弹动画
         PropertyValuesHolder holder = PropertyValuesHolder.ofInt("PointRadius", 0, 300, 100);
@@ -314,7 +324,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         } else {
             //属性动画的移动，点击响应区域才会变化
-            Toast.makeText(this, "你点击了" + v, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, LinearActivity.class);
+            startActivity(intent);
         }
     }
 

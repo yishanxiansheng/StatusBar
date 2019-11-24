@@ -107,8 +107,8 @@
 
     <Button
         android:id="@+id/btn_1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:visibility="gone"
@@ -119,8 +119,8 @@
 
     <Button
         android:id="@+id/btn_2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:visibility="gone"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
@@ -131,8 +131,8 @@
 
     <Button
         android:id="@+id/btn_3"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:visibility="gone"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
@@ -143,8 +143,8 @@
 
     <Button
         android:id="@+id/btn_4"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:visibility="gone"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
@@ -154,14 +154,15 @@
     </Button>
     <Button
         android:id="@+id/btn_5"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:visibility="gone"
+        android:text="跳转L"
+        android:textSize="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/show_dialog"
         app:layout_constraintRight_toRightOf="parent">
     </Button>
-
 </android.support.constraint.ConstraintLayout>
